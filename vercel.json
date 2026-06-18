@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "outputDirectory": "frontend/dist",
+  "outputDirectory": "build",
   "rewrites": [
     { "source": "/api/(.*)", "destination": "https://backend-o3wm.onrender.com/api/$1" },
     { "source": "/((?!api/).*)", "destination": "/index.html" }
