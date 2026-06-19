@@ -9,7 +9,7 @@ export const AuthProvider = ({ children }) => {
 
   useEffect(() => {
     const checkAuth = async () => {
-      const token = localStorage.getItem('binuthman_token');
+      const token = localStorage.getItem('binuthman_token') || sessionStorage.getItem('binuthman_token');
       if (token) {
         try {
           const profile = await api.users.getProfile();
@@ -25,15 +25,20 @@ export const AuthProvider = ({ children }) => {
     checkAuth();
   }, []);
 
-  const login = async (email, password) => {
+  const login = async (email, password, rememberMe = false) => {
     const data = await api.auth.login(email, password);
-    localStorage.setItem('binuthman_token', data.token);
+    if (rememberMe) {
+      localStorage.setItem('binuthman_token', data.token);
+    } else {
+      sessionStorage.setItem('binuthman_token', data.token);
+    }
     setUser(data.user);
     return data.user;
   };
 
   const logout = () => {
     localStorage.removeItem('binuthman_token');
+    sessionStorage.removeItem('binuthman_token');
     setUser(null);
   };
 
