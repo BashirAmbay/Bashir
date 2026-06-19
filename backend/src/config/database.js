@@ -21,6 +21,9 @@ if (process.env.VERCEL) {
     }
   }
   dbPath = tmpDbPath;
+} else if (process.env.RENDER) {
+  // On Render, use the persistent disk mounted at /data
+  dbPath = '/data/binuthman.db';
 } else {
   dbPath = path.join(__dirname, '../../database/binuthman.db');
 }
