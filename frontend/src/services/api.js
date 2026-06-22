@@ -1,5 +1,5 @@
 async function apiRequest(endpoint, options = {}) {
-  const token = localStorage.getItem('binuthman_token');
+  const token = localStorage.getItem('binuthman_token') || sessionStorage.getItem('binuthman_token');
   const headers = {
     'Content-Type': 'application/json',
     ...(options.headers || {})
