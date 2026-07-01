@@ -38,7 +38,7 @@ app.get('/api/health', (req, res) => {
 });
 
 // Serve Frontend Static Files in Production
-if (process.env.NODE_ENV === 'production') {
+if (process.env.NODE_ENV === 'production' && !process.env.VERCEL) {
   app.use(express.static(path.join(__dirname, '../../frontend/dist')));
   
   app.get(/(.*)/, (req, res) => {
