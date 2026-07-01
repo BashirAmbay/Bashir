@@ -4,7 +4,7 @@
   "buildCommand": "npm run build",
   "outputDirectory": "frontend/dist",
   "rewrites": [
-    { "source": "/api/(.*)", "destination": "https://backend-o3wm.onrender.com/api/$1" },
+    { "source": "/api/(.*)", "destination": "https://bashir-backend-kbwt.vercel.app/api/$1" },
     { "source": "/(.*)", "destination": "/index.html" }
   ]
 }
