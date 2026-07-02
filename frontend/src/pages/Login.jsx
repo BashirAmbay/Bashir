@@ -42,9 +42,9 @@ export default function Login() {
         {/* Brand header */}
         <div className="text-center mb-8">
           <div className="flex justify-center mb-4">
-            <img src={logoImage} alt="BinUthman Water Logo" className="w-24 h-24 object-contain drop-shadow-xl" />
+            <img src={logoImage} alt="Bin Uthman Water Logo" className="w-24 h-24 object-contain drop-shadow-xl" />
           </div>
-          <h1 className="text-3xl font-bold font-display tracking-tight text-white">BinUthman Water</h1>
+          <h1 className="text-3xl font-bold font-display tracking-tight text-white">Bin Uthman Water</h1>
           <p className="text-slate-400 mt-2 text-sm">Premium Water Booking & Delivery System</p>
         </div>
 
