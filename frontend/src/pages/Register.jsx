@@ -70,10 +70,10 @@ export default function Register() {
       <div className="w-full max-w-xl p-8 rounded-2xl glass relative z-10 shadow-2xl">
         <div className="text-center mb-8">
           <div className="flex justify-center mb-4">
-            <img src={logoImage} alt="BinUthman Water Logo" className="w-24 h-24 object-contain drop-shadow-xl" />
+            <img src={logoImage} alt="Bin Uthman Water Logo" className="w-24 h-24 object-contain drop-shadow-xl" />
           </div>
           <h1 className="text-3xl font-bold font-display tracking-tight text-white">Create Account</h1>
-          <p className="text-slate-400 mt-2 text-sm">Join BinUthman Water to start ordering</p>
+          <p className="text-slate-400 mt-2 text-sm">Join Bin Uthman Water to start ordering</p>
         </div>
 
         {error && (
