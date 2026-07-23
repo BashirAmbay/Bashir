@@ -223,4 +223,63 @@ router.post('/:id/assign', authenticateToken, (req, res) => {
   });
 });
 
+// INITIALIZE PAYMENT (Paystack)
+router.post('/:id/pay', authenticateToken, async (req, res) => {
+  const bookingId = req.params.id;
+
+  db.get('SELECT b.*, u.email FROM bookings b JOIN users u ON b.userId = u.id WHERE b.id = ?', [bookingId], async (err, booking) => {
+    if (err) return res.status(500).json({ message: 'Database error', error: err.message });
+    if (!booking) return res.status(404).json({ message: 'Booking not found' });
+    
+    // Auth check
+    if (booking.userId !== req.user.id) return res.status(403).json({ message: 'Access denied' });
+    
+    // Check if already paid
+    if (booking.paymentStatus === 'paid') return res.status(400).json({ message: 'Booking is already paid' });
+
+    // Calculate amount (e.g. 50 NGN or whatever currency per liter. Assuming 1000 kobo (10 NGN) per liter for test)
+    // Paystack requires amount in kobo (base unit). Let's say 1 liter = 50 NGN = 5000 kobo
+    const pricePerLiterKobo = 5000; 
+    const amountKobo = Math.round(booking.quantity * pricePerLiterKobo);
+
+    const secretKey = process.env.PAYSTACK_SECRET_KEY || 'sk_test_placeholder'; // Use placeholder if not provided
+
+    try {
+      const response = await fetch('https://api.paystack.co/transaction/initialize', {
+        method: 'POST',
+        headers: {
+          Authorization: `Bearer ${secretKey}`,
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          email: booking.email,
+          amount: amountKobo,
+          reference: `booking_${booking.id}_${Date.now()}`,
+          metadata: {
+            bookingId: booking.id,
+            userId: booking.userId
+          },
+          // Ensure frontend URL matches where you run the dev server
+          callback_url: `${req.protocol}://${req.get('host')}/dashboard`
+        }),
+      });
+
+      const data = await response.json();
+      if (!response.ok) {
+        return res.status(response.status).json({ message: 'Paystack API Error', error: data.message });
+      }
+
+      // Update booking with pending reference
+      db.run('UPDATE bookings SET paystackReference = ? WHERE id = ?', [data.data.reference, booking.id], (err) => {
+        if (err) console.error('Failed to update reference:', err.message);
+      });
+
+      res.json({ authorization_url: data.data.authorization_url });
+    } catch (err) {
+      console.error('Payment initialization error:', err);
+      res.status(500).json({ message: 'Failed to initialize payment', error: err.message });
+    }
+  });
+});
+
 module.exports = router;

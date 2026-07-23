@@ -16,3 +16,4 @@ services:
       name: sqlite-data
       mountPath: /data
       sizeGB: 1
+ 2

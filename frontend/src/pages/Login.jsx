@@ -33,12 +33,13 @@ export default function Login() {
   };
 
   return (
-    <div className="relative min-h-screen flex items-center justify-center p-4 overflow-hidden bg-slate-950">
+    <div className="relative min-h-screen flex items-center justify-center p-4 overflow-hidden bg-transparent">
       {/* Decorative background glows */}
-      <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-sky-500/10 rounded-full blur-3xl animate-pulse-slow"></div>
-      <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-blue-600/10 rounded-full blur-3xl animate-pulse-slow"></div>
+      <div className="absolute top-[-10%] left-[-10%] w-[500px] h-[500px] bg-sky-200/50 rounded-full blur-[80px] animate-pulse-slow"></div>
+      <div className="absolute bottom-[-10%] right-[-10%] w-[600px] h-[600px] bg-blue-300/40 rounded-full blur-[100px] animate-pulse-slow"></div>
+      <div className="absolute top-[40%] right-[20%] w-[300px] h-[300px] bg-cyan-200/40 rounded-full blur-[60px] animate-pulse-slow"></div>
 
-      <div className="w-full max-w-md p-8 rounded-2xl glass relative z-10 shadow-2xl">
+      <div className="w-full max-w-md p-8 rounded-[24px] glass relative z-10 shadow-[0_8px_32px_rgba(0,120,255,0.1)]">
         {/* Brand header */}
         <div className="text-center mb-8">
           <div className="flex justify-center mb-4">
@@ -48,11 +49,11 @@ export default function Login() {
           <p className="text-slate-400 mt-2 text-sm">Premium Water Booking & Delivery System</p>
         </div>
 
-        <h2 className="text-xl font-semibold text-white mb-6 text-center">Sign In to Your Account</h2>
+        <h2 className="text-xl font-bold text-[#1e3a8a] mb-6 text-center">Sign In to Your Account</h2>
 
         {error && (
-          <div className="mb-4 p-3 bg-red-950/40 border border-red-500/30 rounded-lg text-red-200 text-sm flex items-start gap-2">
-            <svg className="w-5 h-5 shrink-0 text-red-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <div className="mb-4 p-3 bg-red-50 border border-red-200 rounded-lg text-red-700 text-sm flex items-start gap-2">
+            <svg className="w-5 h-5 shrink-0 text-red-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
             </svg>
             <span>{error}</span>
@@ -61,14 +62,14 @@ export default function Login() {
 
         <form onSubmit={handleSubmit} className="space-y-5">
           <div>
-            <label className="block text-slate-300 text-xs font-semibold uppercase tracking-wider mb-2" htmlFor="email">
+            <label className="block text-slate-700 text-xs font-bold uppercase tracking-wider mb-2" htmlFor="email">
               Email Address
             </label>
             <input
               id="email"
               type="email"
               required
-              className="w-full px-4 py-3 bg-slate-900/60 border border-slate-700/60 rounded-xl text-white placeholder-slate-500 focus:outline-none focus:border-sky-500 focus:ring-1 focus:ring-sky-500 transition-colors"
+              className="w-full px-4 py-3 bg-white border border-slate-200 rounded-xl text-slate-800 placeholder-slate-400 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-colors shadow-sm"
               placeholder="name@example.com"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
@@ -77,10 +78,10 @@ export default function Login() {
 
           <div>
             <div className="flex justify-between items-center mb-2">
-              <label className="block text-slate-300 text-xs font-semibold uppercase tracking-wider" htmlFor="password">
+              <label className="block text-slate-700 text-xs font-bold uppercase tracking-wider" htmlFor="password">
                 Password
               </label>
-              <Link to="/reset-password" className="text-xs text-sky-400 hover:underline">
+              <Link to="/reset-password" className="text-xs text-blue-500 hover:text-blue-600 hover:underline">
                 Forgot password?
               </Link>
             </div>
@@ -89,7 +90,7 @@ export default function Login() {
                 id="password"
                 type={showPassword ? "text" : "password"}
                 required
-                className="w-full px-4 py-3 bg-slate-900/60 border border-slate-700/60 rounded-xl text-white placeholder-slate-500 focus:outline-none focus:border-sky-500 focus:ring-1 focus:ring-sky-500 transition-colors pr-12"
+                className="w-full px-4 py-3 bg-white border border-slate-200 rounded-xl text-slate-800 placeholder-slate-400 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-colors shadow-sm pr-12"
                 placeholder="••••••••"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
@@ -97,7 +98,7 @@ export default function Login() {
               <button
                 type="button"
                 onClick={() => setShowPassword(!showPassword)}
-                className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-sky-400 focus:outline-none"
+                className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-blue-500 focus:outline-none"
               >
                 {showPassword ? (
                   <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -117,11 +118,11 @@ export default function Login() {
             <input
               id="remember-me"
               type="checkbox"
-              className="w-4 h-4 bg-slate-900 border border-slate-700 rounded text-sky-500 focus:ring-sky-500 focus:ring-offset-slate-950 transition-colors cursor-pointer"
+              className="w-4 h-4 bg-white border border-slate-300 rounded text-blue-600 focus:ring-blue-500 focus:ring-offset-white transition-colors cursor-pointer"
               checked={rememberMe}
               onChange={(e) => setRememberMe(e.target.checked)}
             />
-            <label htmlFor="remember-me" className="ml-2 block text-sm text-slate-300 cursor-pointer select-none">
+            <label htmlFor="remember-me" className="ml-2 block text-sm text-slate-600 cursor-pointer select-none">
               Remember me
             </label>
           </div>
@@ -129,7 +130,7 @@ export default function Login() {
           <button
             type="submit"
             disabled={loading}
-            className="w-full py-3 px-4 bg-sky-600 hover:bg-sky-500 disabled:bg-sky-800 disabled:cursor-not-allowed text-white font-semibold rounded-xl shadow-lg shadow-sky-500/20 hover:shadow-sky-500/30 transition-all duration-200 flex items-center justify-center gap-2"
+            className="w-full py-3 px-4 bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 disabled:from-blue-300 disabled:to-blue-400 disabled:cursor-not-allowed text-white font-bold rounded-xl shadow-lg shadow-blue-500/30 transition-all duration-200 flex items-center justify-center gap-2"
           >
             {loading ? (
               <>
@@ -140,14 +141,19 @@ export default function Login() {
                 <span>Signing In...</span>
               </>
             ) : (
-              <span>Sign In</span>
+              <>
+                <span>Sign In</span>
+                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M11 16l-4-4m0 0l4-4m-4 4h14m-5 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h7a3 3 0 013 3v1" />
+                </svg>
+              </>
             )}
           </button>
         </form>
 
-        <div className="text-center mt-6 text-sm text-slate-400">
+        <div className="text-center mt-6 text-sm text-slate-500">
           Don't have an account?{' '}
-          <Link to="/register" className="text-sky-400 font-semibold hover:underline">
+          <Link to="/register" className="text-blue-600 font-bold hover:underline">
             Register Here
           </Link>
         </div>

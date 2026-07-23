@@ -57,30 +57,30 @@ export default function ResetPassword() {
   };
 
   return (
-    <div className="relative min-h-screen flex items-center justify-center p-4 overflow-hidden bg-slate-950">
-      <div className="absolute top-1/4 right-1/4 w-96 h-96 bg-sky-500/10 rounded-full blur-3xl animate-pulse-slow"></div>
+    <div className="relative min-h-screen flex items-center justify-center p-4 overflow-hidden bg-transparent">
+      <div className="absolute top-[-10%] right-[-10%] w-[500px] h-[500px] bg-sky-200/50 rounded-full blur-[80px] animate-pulse-slow"></div>
 
-      <div className="w-full max-w-md p-8 rounded-2xl glass relative z-10 shadow-2xl">
-        <h1 className="text-2xl font-bold font-display text-white text-center mb-6">Reset Password</h1>
+      <div className="w-full max-w-md p-8 rounded-[24px] glass relative z-10 shadow-[0_8px_32px_rgba(0,120,255,0.1)]">
+        <h1 className="text-2xl font-bold font-display text-[#1e3a8a] text-center mb-6">Reset Password</h1>
 
         {/* FLOW 1: Request Password Reset link (No Token) */}
         {!token && (
           <div>
             {requestError && (
-              <div className="mb-4 p-3 bg-red-950/40 border border-red-500/30 rounded-lg text-red-200 text-sm">
+              <div className="mb-4 p-3 bg-red-50 border border-red-200 rounded-lg text-red-700 text-sm">
                 {requestError}
               </div>
             )}
 
             {requestSuccess && (
               <div className="space-y-4">
-                <div className="p-3 bg-emerald-950/40 border border-emerald-500/30 rounded-lg text-emerald-200 text-sm">
+                <div className="p-3 bg-emerald-50 border border-emerald-200 rounded-lg text-emerald-700 text-sm">
                   {requestSuccess}
                 </div>
-                <div className="p-3 bg-slate-900 border border-slate-800 rounded text-xs font-mono text-slate-300">
+                <div className="p-3 bg-white/80 border border-slate-200 rounded text-xs font-mono text-slate-600">
                   Tip: In development, open <strong>backend/database/emails.log</strong> to find the password reset link!
                 </div>
-                <Link to="/login" className="block text-center text-sm text-sky-400 hover:underline mt-4">
+                <Link to="/login" className="block text-center text-sm text-blue-600 hover:underline mt-4">
                   Back to Login
                 </Link>
               </div>
@@ -88,15 +88,15 @@ export default function ResetPassword() {
 
             {!requestSuccess && (
               <form onSubmit={handleRequestReset} className="space-y-4">
-                <p className="text-sm text-slate-400 text-center mb-4">
+                <p className="text-sm text-slate-500 text-center mb-4">
                   Enter your email address and we will send you a link to reset your password.
                 </p>
                 <div>
-                  <label className="block text-slate-300 text-xs font-semibold uppercase tracking-wider mb-2">Email Address</label>
+                  <label className="block text-slate-700 text-xs font-bold uppercase tracking-wider mb-2">Email Address</label>
                   <input
                     type="email"
                     required
-                    className="w-full px-4 py-3 bg-slate-900/60 border border-slate-700/60 rounded-xl text-white placeholder-slate-500 focus:outline-none focus:border-sky-500 focus:ring-1 focus:ring-sky-500 transition-colors"
+                    className="w-full px-4 py-3 bg-white border border-slate-200 rounded-xl text-slate-800 placeholder-slate-400 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-colors shadow-sm"
                     placeholder="name@example.com"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
@@ -105,12 +105,12 @@ export default function ResetPassword() {
                 <button
                   type="submit"
                   disabled={requestLoading}
-                  className="w-full py-3 px-4 bg-sky-600 hover:bg-sky-500 disabled:bg-sky-800 text-white font-semibold rounded-xl shadow-lg transition-colors flex items-center justify-center gap-2"
+                  className="w-full py-3 px-4 bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 disabled:from-blue-300 disabled:to-blue-400 text-white font-bold rounded-xl shadow-lg shadow-blue-500/30 transition-colors flex items-center justify-center gap-2"
                 >
                   {requestLoading ? 'Sending Reset Link...' : 'Send Reset Link'}
                 </button>
                 <div className="text-center mt-4">
-                  <Link to="/login" className="text-sm text-sky-400 hover:underline">
+                  <Link to="/login" className="text-sm text-blue-600 hover:underline">
                     Back to Login
                   </Link>
                 </div>
@@ -123,17 +123,17 @@ export default function ResetPassword() {
         {token && (
           <div>
             {resetError && (
-              <div className="mb-4 p-3 bg-red-950/40 border border-red-500/30 rounded-lg text-red-200 text-sm">
+              <div className="mb-4 p-3 bg-red-50 border border-red-200 rounded-lg text-red-700 text-sm">
                 {resetError}
               </div>
             )}
 
             {resetSuccess && (
               <div className="space-y-4 text-center">
-                <div className="p-3 bg-emerald-950/40 border border-emerald-500/30 rounded-lg text-emerald-200 text-sm">
+                <div className="p-3 bg-emerald-50 border border-emerald-200 rounded-lg text-emerald-700 text-sm">
                   {resetSuccess}
                 </div>
-                <Link to="/login" className="block w-full py-3 px-4 bg-sky-600 hover:bg-sky-500 text-white font-semibold rounded-xl transition-colors">
+                <Link to="/login" className="block w-full py-3 px-4 bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 text-white font-bold rounded-xl transition-colors shadow-lg shadow-blue-500/30">
                   Go to Login
                 </Link>
               </div>
@@ -141,26 +141,26 @@ export default function ResetPassword() {
 
             {!resetSuccess && (
               <form onSubmit={handlePerformReset} className="space-y-4">
-                <p className="text-sm text-slate-400 text-center mb-4">
+                <p className="text-sm text-slate-500 text-center mb-4">
                   Enter your new password below.
                 </p>
                 <div>
-                  <label className="block text-slate-300 text-xs font-semibold uppercase tracking-wider mb-2">New Password</label>
+                  <label className="block text-slate-700 text-xs font-bold uppercase tracking-wider mb-2">New Password</label>
                   <input
                     type="password"
                     required
-                    className="w-full px-4 py-3 bg-slate-900/60 border border-slate-700/60 rounded-xl text-white placeholder-slate-500 focus:outline-none focus:border-sky-500 focus:ring-1 focus:ring-sky-500 transition-colors"
+                    className="w-full px-4 py-3 bg-white border border-slate-200 rounded-xl text-slate-800 placeholder-slate-400 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-colors shadow-sm"
                     placeholder="••••••••"
                     value={newPassword}
                     onChange={(e) => setNewPassword(e.target.value)}
                   />
                 </div>
                 <div>
-                  <label className="block text-slate-300 text-xs font-semibold uppercase tracking-wider mb-2">Confirm New Password</label>
+                  <label className="block text-slate-700 text-xs font-bold uppercase tracking-wider mb-2">Confirm New Password</label>
                   <input
                     type="password"
                     required
-                    className="w-full px-4 py-3 bg-slate-900/60 border border-slate-700/60 rounded-xl text-white placeholder-slate-500 focus:outline-none focus:border-sky-500 focus:ring-1 focus:ring-sky-500 transition-colors"
+                    className="w-full px-4 py-3 bg-white border border-slate-200 rounded-xl text-slate-800 placeholder-slate-400 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-colors shadow-sm"
                     placeholder="••••••••"
                     value={confirmPassword}
                     onChange={(e) => setConfirmPassword(e.target.value)}
@@ -169,7 +169,7 @@ export default function ResetPassword() {
                 <button
                   type="submit"
                   disabled={resetLoading}
-                  className="w-full py-3 px-4 bg-sky-600 hover:bg-sky-500 disabled:bg-sky-800 text-white font-semibold rounded-xl shadow-lg transition-colors"
+                  className="w-full py-3 px-4 bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 disabled:from-blue-300 disabled:to-blue-400 text-white font-bold rounded-xl shadow-lg shadow-blue-500/30 transition-colors"
                 >
                   {resetLoading ? 'Resetting password...' : 'Reset Password'}
                 </button>

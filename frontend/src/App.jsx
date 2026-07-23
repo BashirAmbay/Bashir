@@ -1,9 +1,22 @@
 import React from 'react';
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 import { AuthProvider, useAuth } from './hooks/useAuth.jsx';
 import Navbar from './components/Navbar.jsx';
+import PublicLayout from './components/PublicLayout.jsx';
 
-// Pages
+// Public Pages
+import Home from './pages/Home.jsx';
+import About from './pages/About.jsx';
+import Products from './pages/Products.jsx';
+import Services from './pages/Services.jsx';
+import Gallery from './pages/Gallery.jsx';
+import Contact from './pages/Contact.jsx';
+import FAQ from './pages/FAQ.jsx';
+
+// Auth & Dashboard Pages
 import Login from './pages/Login.jsx';
 import Register from './pages/Register.jsx';
 import VerifyEmail from './pages/VerifyEmail.jsx';
@@ -18,8 +31,8 @@ function ProtectedRoute({ children }) {
 
   if (loading) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-slate-950">
-        <svg className="animate-spin h-8 w-8 text-sky-500" fill="none" viewBox="0 0 24 24">
+      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-[#e0f2fe] via-white to-[#bae6fd]">
+        <svg className="animate-spin h-8 w-8 text-blue-600" fill="none" viewBox="0 0 24 24">
           <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
           <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" />
         </svg>
@@ -40,8 +53,8 @@ function AdminRoute({ children }) {
 
   if (loading) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-slate-950">
-        <svg className="animate-spin h-8 w-8 text-sky-500" fill="none" viewBox="0 0 24 24">
+      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-[#e0f2fe] via-white to-[#bae6fd]">
+        <svg className="animate-spin h-8 w-8 text-blue-600" fill="none" viewBox="0 0 24 24">
           <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
           <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" />
         </svg>
@@ -60,68 +73,72 @@ function AdminRoute({ children }) {
   return children;
 }
 
-// Default Landing Redirect logic
-function RootRedirect() {
-  const { user, loading } = useAuth();
-
-  if (loading) return null;
-
-  if (!user) {
-    return <Navigate to="/login" replace />;
-  }
-
-  return user.role === 'admin' ? <Navigate to="/admin" replace /> : <Navigate to="/dashboard" replace />;
+// Layout wrapper for existing dashboard/auth pages to maintain their original background
+function AppLayout({ children }) {
+  return (
+    <div className="min-h-screen bg-gradient-to-br from-[#e0f2fe] via-white to-[#bae6fd] text-slate-800 flex flex-col font-sans relative">
+      <Navbar />
+      <main className="flex-1 w-full">
+        {children}
+      </main>
+    </div>
+  );
 }
 
 export default function App() {
   return (
-    <BrowserRouter>
-      <AuthProvider>
-        <div className="min-h-screen bg-slate-950 text-slate-100 flex flex-col font-sans">
-          <Navbar />
-          <main className="flex-1 w-full">
-            <Routes>
-              {/* Public Routes */}
-              <Route path="/login" element={<Login />} />
-              <Route path="/register" element={<Register />} />
-              <Route path="/verify-email" element={<VerifyEmail />} />
-              <Route path="/reset-password" element={<ResetPassword />} />
+    <>
+      <BrowserRouter>
+        <AuthProvider>
+          <Routes>
+            {/* Public Landing Pages */}
+            <Route element={<PublicLayout />}>
+              <Route path="/" element={<Home />} />
+              <Route path="/about" element={<About />} />
+              <Route path="/products" element={<Products />} />
+              <Route path="/services" element={<Services />} />
+              <Route path="/gallery" element={<Gallery />} />
+              <Route path="/contact" element={<Contact />} />
+              <Route path="/faq" element={<FAQ />} />
+            </Route>
 
-              {/* Protected Customer Routes */}
-              <Route 
-                path="/dashboard" 
-                element={
-                  <ProtectedRoute>
-                    <Dashboard />
-                  </ProtectedRoute>
-                } 
-              />
-              <Route 
-                path="/profile" 
-                element={
-                  <ProtectedRoute>
-                    <Profile />
-                  </ProtectedRoute>
-                } 
-              />
+            {/* Auth & Dashboard Routes */}
+            <Route path="/login" element={<AppLayout><Login /></AppLayout>} />
+            <Route path="/register" element={<AppLayout><Register /></AppLayout>} />
+            <Route path="/verify-email" element={<AppLayout><VerifyEmail /></AppLayout>} />
+            <Route path="/reset-password" element={<AppLayout><ResetPassword /></AppLayout>} />
 
-              {/* Protected Admin Routes */}
-              <Route 
-                path="/admin" 
-                element={
-                  <AdminRoute>
-                    <AdminDashboard />
-                  </AdminRoute>
-                } 
-              />
+            <Route 
+              path="/dashboard" 
+              element={
+                <ProtectedRoute>
+                  <AppLayout><Dashboard /></AppLayout>
+                </ProtectedRoute>
+              } 
+            />
+            <Route 
+              path="/profile" 
+              element={
+                <ProtectedRoute>
+                  <AppLayout><Profile /></AppLayout>
+                </ProtectedRoute>
+              } 
+            />
+            <Route 
+              path="/admin" 
+              element={
+                <AdminRoute>
+                  <AppLayout><AdminDashboard /></AppLayout>
+                </AdminRoute>
+              } 
+            />
 
-              {/* Fallbacks */}
-              <Route path="/" element={<RootRedirect />} />
-              <Route path="*" element={<Navigate to="/" replace />} />
-            </Routes>
-          </main>
-        </div>
-      </AuthProvider>
-    </BrowserRouter>
+            {/* Fallback */}
+            <Route path="*" element={<Navigate to="/" replace />} />
+          </Routes>
+        </AuthProvider>
+      </BrowserRouter>
+      <ToastContainer position="top-right" autoClose={5000} />
+    </>
   );
 }

@@ -24,6 +24,7 @@ const bookingRoutes = require('./routes/bookings.js');
 const assignmentRoutes = require('./routes/assignments.js');
 const reportRoutes = require('./routes/reports.js');
 const userRoutes = require('./routes/users.js');
+const webhooksRoutes = require('./routes/webhooks.js');
 
 // Register API Routes
 app.use('/api/auth', authRoutes);
@@ -31,6 +32,7 @@ app.use('/api/bookings', bookingRoutes);
 app.use('/api/assignments', assignmentRoutes);
 app.use('/api/reports', reportRoutes);
 app.use('/api/users', userRoutes);
+app.use('/api/webhooks', webhooksRoutes);
 
 // Simple status route
 app.get('/api/health', (req, res) => {

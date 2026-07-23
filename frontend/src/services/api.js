@@ -95,6 +95,11 @@ export const api = {
       apiRequest(`/api/bookings/${id}/assign`, {
         method: 'POST',
         body: JSON.stringify({ assignedToAdminId })
+      }),
+      
+    pay: (id) => 
+      apiRequest(`/api/bookings/${id}/pay`, {
+        method: 'POST'
       })
   },
 

@@ -10,6 +10,7 @@ console.log('Initializing SQLite database schema...');
 // Importing the database module triggers Database connection and initializeDatabase()
 const db = require('../src/config/database.js');
 
+
 setTimeout(() => {
   db.close((err) => {
     if (err) {

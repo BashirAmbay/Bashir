@@ -68,6 +68,8 @@ function initializeDatabase() {
         preferredDeliveryDate DATETIME NOT NULL,
         notes TEXT,
         status TEXT CHECK(status IN ('pending', 'approved', 'assigned', 'completed', 'cancelled')) DEFAULT 'pending',
+        paymentStatus TEXT CHECK(paymentStatus IN ('unpaid', 'paid', 'failed')) DEFAULT 'unpaid',
+        paystackReference TEXT,
         createdAt DATETIME DEFAULT CURRENT_TIMESTAMP,
         updatedAt DATETIME DEFAULT CURRENT_TIMESTAMP,
         FOREIGN KEY (userId) REFERENCES users(id) ON DELETE CASCADE
